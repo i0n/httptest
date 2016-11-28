@@ -1,0 +1,22 @@
+hash: 613b64b1f6eb6e3fe2c981e7f115d66ceb67ecec91dc184bc8286b74c785d8c1
+updated: 2016-11-28T16:09:37.240833141Z
+imports:
+- name: github.com/fatih/color
+  version: dea9d3a26a087187530244679c1cfb3a42937794
+- name: github.com/mattn/go-colorable
+  version: ed8eb9e318d7a84ce5915b495b7d35e0cfe7b5a8
+- name: github.com/mattn/go-isatty
+  version: 30a891c33c7cde7b02a981314b4228ec99380cca
+- name: github.com/namsral/flag
+  version: 91bb473a91a4a5e1ea554fb8ddce84f832be9aca
+- name: golang.org/x/sys
+  version: 30237cf4eefd639b184d1f2cb77a581ea0be8947
+  subpackages:
+  - unix
+- name: gopkg.in/oleiade/reflections.v1
+  version: 2b6ec3da648e3e834dc41bad8d9ed7f2dc6a9496
+- name: gopkg.in/yaml.v2
+  version: a5b47d31c556af34a302ce5d659e6fea44d90de0
+testImports:
+- name: github.com/oleiade/reflections
+  version: 0e86b3c98b2ff33e30c85cfe97d9a63d439fe7eb

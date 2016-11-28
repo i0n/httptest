@@ -1,0 +1,10 @@
+package: github.com/i0n/httptest
+import:
+- package: github.com/namsral/flag
+- package: github.com/fatih/color
+  version: ~1.1.0
+- package: github.com/mattn/go-colorable
+  version: ~0.0.6
+- package: gopkg.in/yaml.v2
+- package: gopkg.in/oleiade/reflections.v1
+  version: ~1.0.0

@@ -1,0 +1,33 @@
+version: '2'
+services:
+  httptest:
+    image: i0nw/go-and-node-dev:latest
+    container_name: httptest_dev_local
+    working_dir: /go/src/github.com/i0n/httptest
+    command: [dockerize, -wait, "http://exampleServer:8080/health", -timeout, 120s, reflex, -r, '.go|.json|.yml|.yaml', -s, --, sh, -c, 'go run /go/src/github.com/i0n/httptest/cmd/cli/main.go']
+    volumes:
+      - ./:/go/src/github.com/i0n/httptest/
+    environment:
+      ORGANISATION: i0n
+      PROJECT_NAME: httptest
+      REPO_PROVIDER: github.com
+      CONFIG_FILE: ./test/fixtures/fixtures.json
+    links:
+      - exampleServer
+  exampleServer:
+    image: i0nw/go-and-node-dev:latest
+    container_name: exampleServer_dev_local
+    working_dir: /go/src/github.com/i0n/httptest
+    command: [dockerize, -timeout, 120s, reflex, -r, 'test/exampleServer.go', -s, --, sh, -c, 'go run /go/src/github.com/i0n/httptest/test/exampleServer.go']
+    volumes:
+      - ./:/go/src/github.com/i0n/httptest/
+    ports:
+      - "8080:8080"
+    environment:
+      ORGANISATION: i0n
+      PROJECT_NAME: httptest
+      REPO_PROVIDER: github.com
+networks:
+  default:
+    external:
+      name: httptest

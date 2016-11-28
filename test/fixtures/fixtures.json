@@ -1,0 +1,35 @@
+{
+  "api_version": 1,
+  "manifest_name": "exampleServer",
+  "host_name": "exampleServer",
+  "host_port": 8080,
+  "paths": [
+    {
+      "path": "/health",
+      "method": "GET",
+      "content_type": "text/plain; charset=utf-8",
+      "response_status": 200,
+      "response_body": "\"I'm pretty sure there's a lot more to life than being really, really, ridiculously good looking.\" - Derek Zoolander\n"
+    },
+    {
+      "path": "/health",
+      "method": "GET",
+      "content_type": "application/json",
+      "response_status": 200,
+      "response_body": "{\"Body\":\"\\\"I'm pretty sure there's a lot more to life than being really, really, ridiculously good looking.\\\" - Derek Zoolander\\n\"}"
+    },
+    {
+      "path": "/yummydata",
+      "method": "POST",
+      "content_type": "application/json",
+      "response_status": 201,
+      "response_body": "{\"Body\":\"hello world\"}"
+    },
+    {
+      "path": "/should-404",
+      "method": "GET",
+      "content_type": "text/plain; charset=utf-8",
+      "response_status": 404
+    }
+  ]
+}

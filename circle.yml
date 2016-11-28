@@ -1,0 +1,40 @@
+machine:
+  pre:
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
+    - curl -LO https://github.com/aktau/github-release/releases/download/v0.6.2/linux-amd64-github-release.tar.bz2
+    - mkdir tmp-extract
+    - tar -C ./tmp-extract -xjvf ./linux-amd64-github-release.tar.bz2
+    - mv ./tmp-extract/bin/linux/amd64/github-release /usr/local/bin/
+    - rm -rf ./tmp-extract
+    - rm ./linux-amd64-github-release.tar.bz2
+  environment:
+    PROJECT_NAME: httptest
+    DEPLOYMENT_NAME: httptest
+    DOCKER_IMAGE_NAME: i0nw/$PROJECT_NAME
+  services:
+    - docker
+dependencies:
+  pre:
+    # Testing with docker-compose
+    - pip install docker-compose
+  override:
+    # Start up deps and service
+    - docker-compose up -d
+test:
+  override:
+    # Run tests in docker environment
+    - ./scripts/lint.sh no-docker-compose
+    - ./scripts/unit-test.sh no-docker-compose
+deployment:
+  production:
+    branch: master
+    commands:
+      - ./scripts/compile.sh
+      - docker build -t ${DOCKER_IMAGE_NAME}:$(./bin/linux/httptest --version) .
+      - docker tag ${DOCKER_IMAGE_NAME}:$(./bin/linux/httptest --version) ${DOCKER_IMAGE_NAME}:latest
+      - docker images
+      - github-release upload --user i0n --repo httptest --tag $(./bin/linux/httptest --version) --name "httptest-linux-amd64" --file bin/linux/httptest
+      - github-release upload --user i0n --repo httptest --tag $(./bin/linux/httptest --version) --name "httptest-darwin-amd64" --file bin/osx/httptest
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push ${DOCKER_IMAGE_NAME}:$(./bin/linux/httptest --version)
+      - docker push ${DOCKER_IMAGE_NAME}:latest
