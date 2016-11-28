@@ -18,6 +18,7 @@ dependencies:
     # Testing with docker-compose
     - pip install docker-compose
   override:
+    - docker network create httptest
     # Start up deps and service
     - docker-compose up -d
 test:
