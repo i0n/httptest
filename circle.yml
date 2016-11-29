@@ -1,5 +1,3 @@
-general:
-  build_dir: .go_workspace/src/github.com/i0n/httptest
 machine:
   pre:
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
@@ -19,6 +17,7 @@ machine:
     - docker
 dependencies:
   pre:
+    - cd .go_workspace/src/github.com/i0n/httptest
     # Testing with docker-compose
     - pip install docker-compose
   override:
