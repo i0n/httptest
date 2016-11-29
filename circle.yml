@@ -7,6 +7,9 @@ machine:
     - sudo mv ./tmp-extract/bin/linux/amd64/github-release /usr/local/bin/
     - rm -rf ./tmp-extract
     - rm ./linux-amd64-github-release.tar.bz2
+    - mkdir -p /home/ubuntu/.go_workspace/src/github.com/i0n/
+    - mv httptest ~/.go_workspace/src/github.com/i0n/
+    - cd ~/.go_workspace/src/github.com/i0n/httptest
   environment:
     PROJECT_NAME: httptest
     DEPLOYMENT_NAME: httptest
