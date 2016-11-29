@@ -20,8 +20,7 @@ dependencies:
     - pip install docker-compose
     - rm -rf /home/ubuntu/.go_workspace
     - mkdir -p /home/ubuntu/.go_workspace/src/github.com/i0n/
-    - mv httptest ~/.go_workspace/src/github.com/i0n/
-    - cd ${BUILD_DIRECTORY} && git fetch --tags && git pull origin $(git rev-parse --abbrev-ref HEAD)
+    - mv /home/ubuntu/httptest ~/.go_workspace/src/github.com/i0n/
   override:
     - docker network create httptest
     # Start up deps and service
