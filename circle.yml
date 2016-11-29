@@ -13,33 +13,33 @@ machine:
     PROJECT_NAME: httptest
     DEPLOYMENT_NAME: httptest
     DOCKER_IMAGE_NAME: i0nw/$PROJECT_NAME
+    BUILD_DIRECTORY: /home/ubuntu/.go_workspace/src/github.com/i0n/httptest
   services:
     - docker
 dependencies:
   pre:
-    - cd ~/.go_workspace/src/github.com/i0n/httptest
     # Testing with docker-compose
     - pip install docker-compose
   override:
     - docker network create httptest
     # Start up deps and service
-    - docker-compose up -d
+    - cd ${BUILD_DIRECTORY} && docker-compose up -d
 test:
   override:
     # Run tests in docker environment
-    - ./scripts/lint.sh no-docker-compose
-    - ./scripts/unit-test.sh no-docker-compose
+    - cd ${BUILD_DIRECTORY} && ./scripts/lint.sh no-docker-compose
+    - cd ${BUILD_DIRECTORY} && ./scripts/unit-test.sh no-docker-compose
 deployment:
   production:
     tag: /[0-9]+(\.[0-9]+)*/
     commands:
-      - git checkout -b master origin/master
-      - ./scripts/compile.sh
-      - docker build -t ${DOCKER_IMAGE_NAME}:$(./bin/linux/httptest --version) .
+      - cd ${BUILD_DIRECTORY} && git checkout -b master origin/master
+      - cd ${BUILD_DIRECTORY} && ./scripts/compile.sh
+      - cd ${BUILD_DIRECTORY} && docker build -t ${DOCKER_IMAGE_NAME}:$(./bin/linux/httptest --version) .
       - docker tag ${DOCKER_IMAGE_NAME}:$(./bin/linux/httptest --version) ${DOCKER_IMAGE_NAME}:latest
       - docker images
-      - github-release upload --user i0n --repo httptest --tag $(./bin/linux/httptest --version) --name "httptest-linux-amd64" --file bin/linux/httptest
-      - github-release upload --user i0n --repo httptest --tag $(./bin/linux/httptest --version) --name "httptest-darwin-amd64" --file bin/osx/httptest
+      - cd ${BUILD_DIRECTORY} && github-release upload --user i0n --repo httptest --tag $(./bin/linux/httptest --version) --name "httptest-linux-amd64" --file bin/linux/httptest
+      - cd ${BUILD_DIRECTORY} && github-release upload --user i0n --repo httptest --tag $(./bin/linux/httptest --version) --name "httptest-darwin-amd64" --file bin/osx/httptest
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker push ${DOCKER_IMAGE_NAME}:$(./bin/linux/httptest --version)
       - docker push ${DOCKER_IMAGE_NAME}:latest
