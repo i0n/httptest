@@ -1,3 +1,5 @@
+general:
+  build_dir: ~/.go_workspace/src/github.com/i0n/httptest
 machine:
   pre:
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
@@ -9,7 +11,6 @@ machine:
     - rm ./linux-amd64-github-release.tar.bz2
     - mkdir -p /home/ubuntu/.go_workspace/src/github.com/i0n/
     - mv httptest ~/.go_workspace/src/github.com/i0n/
-    - cd ~/.go_workspace/src/github.com/i0n/httptest
   environment:
     PROJECT_NAME: httptest
     DEPLOYMENT_NAME: httptest
