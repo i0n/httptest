@@ -33,7 +33,6 @@ deployment:
   production:
     tag: /[0-9]+(\.[0-9]+)*/
     commands:
-      - cd ${BUILD_DIRECTORY} && git checkout -b master origin/master
       - cd ${BUILD_DIRECTORY} && ./scripts/compile.sh
       - cd ${BUILD_DIRECTORY} && docker build -t ${DOCKER_IMAGE_NAME}:$(./bin/linux/httptest --version) .
       - docker tag ${DOCKER_IMAGE_NAME}:$(./bin/linux/httptest --version) ${DOCKER_IMAGE_NAME}:latest
