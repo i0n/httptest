@@ -20,6 +20,7 @@ dependencies:
   pre:
     # Testing with docker-compose
     - pip install docker-compose
+    - cd ${BUILD_DIRECTORY} && git fetch --tags && git pull
   override:
     - docker network create httptest
     # Start up deps and service
