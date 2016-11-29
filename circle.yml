@@ -7,8 +7,6 @@ machine:
     - sudo mv ./tmp-extract/bin/linux/amd64/github-release /usr/local/bin/
     - rm -rf ./tmp-extract
     - rm ./linux-amd64-github-release.tar.bz2
-    - mkdir -p /home/ubuntu/.go_workspace/src/github.com/i0n/
-    - mv httptest ~/.go_workspace/src/github.com/i0n/
   environment:
     PROJECT_NAME: httptest
     DEPLOYMENT_NAME: httptest
@@ -20,6 +18,9 @@ dependencies:
   pre:
     # Testing with docker-compose
     - pip install docker-compose
+    - rm -rf /home/ubuntu/.go_workspace
+    - mkdir -p /home/ubuntu/.go_workspace/src/github.com/i0n/
+    - mv httptest ~/.go_workspace/src/github.com/i0n/
     - cd ${BUILD_DIRECTORY} && git fetch --tags && git pull origin $(git rev-parse --abbrev-ref HEAD)
   override:
     - docker network create httptest
