@@ -34,11 +34,11 @@ deployment:
     tag: /[0-9]+(\.[0-9]+)*/
     commands:
       - cd ${BUILD_DIRECTORY} && ./scripts/compile.sh
-      - cd ${BUILD_DIRECTORY} && docker build -t ${DOCKER_IMAGE_NAME}:$(./bin/linux/httptest --version) .
-      - docker tag ${DOCKER_IMAGE_NAME}:$(./bin/linux/httptest --version) ${DOCKER_IMAGE_NAME}:latest
+      - cd ${BUILD_DIRECTORY} && docker build -t ${DOCKER_IMAGE_NAME}:$(${BUILD_DIRECTORY}/bin/linux/httptest --version) .
+      - docker tag ${DOCKER_IMAGE_NAME}:$(${BUILD_DIRECTORY}/bin/linux/httptest --version) ${DOCKER_IMAGE_NAME}:latest
       - docker images
-      - cd ${BUILD_DIRECTORY} && github-release upload --user i0n --repo httptest --tag $(./bin/linux/httptest --version) --name "httptest-linux-amd64" --file bin/linux/httptest
-      - cd ${BUILD_DIRECTORY} && github-release upload --user i0n --repo httptest --tag $(./bin/linux/httptest --version) --name "httptest-darwin-amd64" --file bin/osx/httptest
+      - cd ${BUILD_DIRECTORY} && github-release upload --user i0n --repo httptest --tag $(${BUILD_DIRECTORY}/bin/linux/httptest --version) --name "httptest-linux-amd64" --file bin/linux/httptest
+      - cd ${BUILD_DIRECTORY} && github-release upload --user i0n --repo httptest --tag $(${BUILD_DIRECTORY}/bin/linux/httptest --version) --name "httptest-darwin-amd64" --file bin/osx/httptest
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker push ${DOCKER_IMAGE_NAME}:$(./bin/linux/httptest --version)
+      - docker push ${DOCKER_IMAGE_NAME}:$(${BUILD_DIRECTORY}/bin/linux/httptest --version)
       - docker push ${DOCKER_IMAGE_NAME}:latest
