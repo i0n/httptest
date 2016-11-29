@@ -17,7 +17,7 @@ machine:
     - docker
 dependencies:
   pre:
-    - cd .go_workspace/src/github.com/i0n/httptest
+    - cd ~/.go_workspace/src/github.com/i0n/httptest
     # Testing with docker-compose
     - pip install docker-compose
   override:
