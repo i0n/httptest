@@ -21,7 +21,15 @@ if [ "$1" = no-docker-compose ]; then
 else
   docker-compose down
   docker-compose pull
+  docker pull i0nw/httptest:latest 
   docker-compose up -d --force-recreate
 fi
 
-# TODO Add actual testing here...
+docker run -ti \
+  --net httptest \
+  --link exampleServer_dev_local:exampleServer \
+  -v $root_dir:/opt/$PROJECT_NAME \
+  -e CONFIG_FILE=/opt/$PROJECT_NAME/test/fixtures/fixtures.json \
+  i0nw/httptest:latest \
+  dockerize -wait http://exampleServer:8080/health -timeout 120s httptest
+

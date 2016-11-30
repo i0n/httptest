@@ -1,5 +1,0 @@
-httptest is a simple http client for performing integration tests on http endpoints.
-
-It accepts a json or yaml manifest which defines your expectations for the service you would like to test.
-If everything goes well the process will exit with code 0. It will exit with code 1 on any failure.
-Have a look at test/fixtures/fixtures.json or test/fixtures/fixtures.yml for example manifests. 

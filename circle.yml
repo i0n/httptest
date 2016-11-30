@@ -30,6 +30,7 @@ test:
     # Run tests in docker environment
     - cd ${BUILD_DIRECTORY} && ./scripts/lint.sh no-docker-compose
     - cd ${BUILD_DIRECTORY} && ./scripts/unit-test.sh no-docker-compose
+    - cd ${BUILD_DIRECTORY} && ./scripts/integration-test.sh no-docker-compose
 deployment:
   production:
     tag: /[0-9]+(\.[0-9]+)*/
