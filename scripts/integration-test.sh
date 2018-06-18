@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# This script will run all node integartion tests in a docker container.
+# This script will run all integartion tests in a docker container.
 # pass no-docker-compose as an argument to avoid using docker-compose inside the script (workaround for CircleCI dodgy docker implementation)
 
 # stop execution of script on failure
